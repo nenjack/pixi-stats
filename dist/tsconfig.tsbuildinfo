@@ -1,1 +1,1 @@
-{"root":["../src/index.ts","../src/model.ts","../src/pixi-hooks.ts","../src/stats-adapter.ts","../src/stats-constants.ts","../src/stats-panel.ts","../src/stats.ts","../src/hooks/BaseHooks.ts","../src/hooks/GLHook.ts","../src/hooks/TextureHook.ts"],"version":"5.8.3"}
+{"root":["../src/index.ts","../src/model.ts","../src/pixi-hooks.ts","../src/stats-adapter.ts","../src/stats-constants.ts","../src/stats-panel.ts","../src/stats.ts","../src/hooks/basehooks.ts","../src/hooks/glhook.ts","../src/hooks/texturehook.ts"],"version":"5.8.3"}

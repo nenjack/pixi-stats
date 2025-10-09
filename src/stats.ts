@@ -1,16 +1,17 @@
 import { PIXIHooks } from './pixi-hooks';
-import { Panel } from './stats-panel';
+import { Panel, RenderPanel } from './stats-panel';
 import { Renderer } from './model';
 import { StatsJSAdapter } from './stats-adapter';
+import { DOM_ELEMENT_ID } from './stats-constants';
 
 export class Stats {
-  mode = 0;
+  mode = -1;
   frames = 0;
 
   beginTime: number;
   prevTime: number;
-  domElement: HTMLDivElement;
-
+  domElement: HTMLDivElement | null = null;
+  containerElement: HTMLElement | null = null;
   pixiHooks: PIXIHooks;
   adapter: StatsJSAdapter;
 
@@ -18,25 +19,17 @@ export class Stats {
   msPanel: Panel;
   memPanel?: Panel;
 
+  panels: Panel[] = [];
+  renderPanel: RenderPanel | null = null;
+  wasInitDomElement: boolean = false;
+
   constructor(
     renderer: Renderer,
-    containerElement: HTMLElement = document.body,
-    ticker?: { add: (fn: () => void) => void }
+    ticker?: { add: (fn: () => void) => void },
+    containerElement?: HTMLElement
   ) {
     this.beginTime = (performance || Date).now();
     this.prevTime = this.beginTime;
-
-    this.domElement = document.createElement('div');
-    this.domElement.id = 'stats';
-    this.domElement.addEventListener(
-      'click',
-      (event) => {
-        event.preventDefault();
-
-        this.showPanel(++this.mode % this.domElement.children.length);
-      },
-      false
-    );
 
     this.fpsPanel = this.addPanel(new Panel('FPS', '#3ff', '#002'));
     this.msPanel = this.addPanel(new Panel('MS', '#0f0', '#020'));
@@ -47,9 +40,10 @@ export class Stats {
 
     this.pixiHooks = new PIXIHooks(renderer);
     this.adapter = new StatsJSAdapter(this.pixiHooks, this);
-    this.showPanel(0);
 
-    containerElement.appendChild(this.domElement);
+    if (containerElement) {
+      this.containerElement = containerElement;
+    }
 
     if ('animations' in renderer) {
       renderer.animations.push(() => {
@@ -71,22 +65,71 @@ export class Stats {
     }
   }
 
-  addPanel(panel: Panel): Panel {
-    this.domElement.appendChild(panel.dom);
+  initDomElement(): void {
+    if (this.containerElement && !this.wasInitDomElement) {
+      this.domElement = document.createElement('div');
+      this.domElement.id = DOM_ELEMENT_ID;
+      this.domElement.addEventListener(
+        'click',
+        this.handleClickPanel,
+        false
+      );
 
+      this.containerElement.appendChild(this.domElement);
+      this.wasInitDomElement = true;
+    }
+  }
+
+  handleClickPanel = (event: MouseEvent): void => {
+    event.preventDefault();
+    this.showPanel(++this.mode % this.panels.length);
+  }
+
+  addPanel(panel: Panel): Panel {
+    this.panels.push(panel);
     return panel;
   }
 
   showPanel(id: number) {
-    for (let index = 0; index < this.domElement.children.length; index++) {
-      const element: HTMLElement = this.domElement.children[
-        index
-      ] as HTMLElement;
+    
+    const panel = this.panels[id];
 
-      element.style.display = index === id ? 'block' : 'none';
+    if (panel) {
+      this.initDomElement();
+      this.removeDomRenderPanel();
+      this.createRenderPanel(panel);
+      this.mode = id;
+    } else  {
+      this.removeDomRenderPanel();
+      this.removeDomElement();
+      this.mode = -1;
     }
+  }
 
-    this.mode = id;
+  createRenderPanel(panel: Panel): void {
+    if (this.domElement && panel) {
+      this.renderPanel = new RenderPanel(panel);
+      if (this.renderPanel.dom) {
+        this.domElement.appendChild(this.renderPanel.dom);
+      }
+    }
+  }
+
+  removeDomRenderPanel(): void {
+    if (this.domElement && this.renderPanel && this.renderPanel.dom) {
+      this.domElement.removeChild(this.renderPanel.dom);
+      this.renderPanel.destroy();
+      this.renderPanel = null;
+    }
+  }
+
+  removeDomElement():void {
+    if (this.containerElement && this.domElement) {
+      this.containerElement.removeChild(this.domElement);
+      this.domElement.removeEventListener('click', this.handleClickPanel, false);
+      this.domElement = null;
+      this.wasInitDomElement = false;
+    }
   }
 
   begin(): void {
