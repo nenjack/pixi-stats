@@ -1,21 +1,21 @@
 import { IStats } from './model';
 import { PIXIHooks } from './pixi-hooks';
-import { Panel } from './stats-panel';
+import { StatStorage } from './stat-storage';
 
 export class StatsJSAdapter {
   hook: PIXIHooks;
   stats: IStats;
 
-  dcPanel?: Panel;
-  tcPanel?: Panel;
+  dcStat?: StatStorage;
+  tcStat?: StatStorage;
 
   constructor(hook: PIXIHooks, stats: IStats) {
     this.hook = hook;
     this.stats = stats;
 
     if (this.hook.hooked) {
-      this.dcPanel = this.stats.addPanel(new Panel('DC', '#f60', '#300'));
-      this.tcPanel = this.stats.addPanel(new Panel('TC', '#0c6', '#033'));
+      this.dcStat = this.stats.createStat('DC', '#f60', '#300');
+      this.tcStat = this.stats.createStat('TC', '#0c6', '#033');
     }
   }
 
@@ -25,12 +25,12 @@ export class StatsJSAdapter {
     }
 
     if (this.hook) {
-      this.dcPanel?.update(
+      this.dcStat?.update(
         this.hook.deltaDrawCalls,
         Math.max(50, this.hook.maxDeltaDrawCalls)
       );
 
-      this.tcPanel?.update(
+      this.tcStat?.update(
         this.hook.texturesCount,
         Math.max(20, this.hook.maxTextureCount)
       );

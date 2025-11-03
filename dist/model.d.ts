@@ -12,4 +12,5 @@ export interface PIXIRendererGlTexture {
     managedTextures?: PIXIGlTextureArray;
     _glTextures?: PIXIGlTextureRecord;
 }
+export type UpdateCallbackType = (value: number, maxValue: number) => void;
 //# sourceMappingURL=model.d.ts.map

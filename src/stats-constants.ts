@@ -8,3 +8,4 @@ export const FONT_SIZE = 20; // tested @ 120.0 FPS (120~120)
 export const GRAPH_Y = FONT_SIZE + TEXT_Y;
 export const GRAPH_WIDTH = WIDTH - GRAPH_X * 2;
 export const GRAPH_HEIGHT = HEIGHT - GRAPH_X - GRAPH_Y;
+export const DOM_ELEMENT_ID = 'stats';

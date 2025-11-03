@@ -1,11 +1,11 @@
 import { IStats } from './model';
 import { PIXIHooks } from './pixi-hooks';
-import { Panel } from './stats-panel';
+import { StatStorage } from './stat-storage';
 export declare class StatsJSAdapter {
     hook: PIXIHooks;
     stats: IStats;
-    dcPanel?: Panel;
-    tcPanel?: Panel;
+    dcStat?: StatStorage;
+    tcStat?: StatStorage;
     constructor(hook: PIXIHooks, stats: IStats);
     update(): void;
     reset(): void;

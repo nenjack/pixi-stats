@@ -22,3 +22,5 @@ export interface PIXIRendererGlTexture {
   // pixi v8
   _glTextures?: PIXIGlTextureRecord;
 }
+
+export type UpdateCallbackType = (value: number, maxValue: number) => void;

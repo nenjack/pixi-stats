@@ -10,18 +10,21 @@ import {
   TEXT_Y,
   WIDTH
 } from './stats-constants';
-
-export class Panel {
-  values: number[] = [];
-  snapshotSize: number = 30; // min~max of X frames total
-
-  name: string;
-  dom: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
+import { StatStorage } from './stat-storage';
+export class RenderPanel {
+  dom: HTMLCanvasElement | null;
+  context: CanvasRenderingContext2D | null;
   fg: string;
   bg: string;
+  name: string;
+  statStorage: StatStorage | null;
 
-  constructor(name: string, fg: string, bg: string) {
+  constructor(name: string, fg: string, bg: string, statStorage: StatStorage) {
+    this.fg = fg;
+    this.bg = bg;
+    this.name = name;
+    this.statStorage = statStorage;
+    this.statStorage.addCallback(this.update);
     const canvas: HTMLCanvasElement = document.createElement('canvas');
 
     canvas.width = WIDTH;
@@ -35,55 +38,26 @@ export class Panel {
     context.font = `bold ${FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
     context.textBaseline = 'top';
 
-    context.fillStyle = bg;
+    context.fillStyle = this.bg;
     context.fillRect(0, 0, WIDTH, HEIGHT);
 
-    context.fillStyle = fg;
-    context.fillText(name, TEXT_X, TEXT_Y);
+    context.fillStyle = this.fg;
+    context.fillText(this.name, TEXT_X, TEXT_Y);
     context.fillRect(GRAPH_X, GRAPH_Y, GRAPH_WIDTH, GRAPH_HEIGHT);
 
-    context.fillStyle = bg;
+    context.fillStyle = this.bg;
     context.globalAlpha = 0.8;
     context.fillRect(GRAPH_X, GRAPH_Y, GRAPH_WIDTH, GRAPH_HEIGHT);
 
-    this.name = name;
     this.dom = canvas;
     this.context = context;
-    this.fg = fg;
-    this.bg = bg;
   }
 
-  get min(): string {
-    return this.values
-      .reduce((min: number, value: number) => Math.min(min, value), Infinity)
-      .toFixed();
-  }
-
-  get max(): string {
-    return this.values
-      .reduce((max: number, value: number) => Math.max(max, value), 0)
-      .toFixed();
-  }
-
-  get averageValue(): string {
-    return (
-      this.values.reduce((sum: number, value: number) => sum + value, 0) /
-      this.values.length
-    ).toFixed(1);
-  }
-
-  pushValue(value: number) {
-    this.values.push(value);
-
-    if (this.values.length > this.snapshotSize) {
-      this.values = this.values.slice(-this.snapshotSize);
+  update = (value: number, maxValue: number) => {
+    if (!this.context || !this.statStorage || !this.dom) {
+      return;
     }
-  }
-
-  update(value: number, maxValue: number) {
     const context: CanvasRenderingContext2D = this.context;
-
-    this.pushValue(value);
 
     context.fillStyle = this.bg;
     context.globalAlpha = 1;
@@ -91,7 +65,7 @@ export class Panel {
     context.fillStyle = this.fg;
     context.font = `bold ${FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
     context.fillText(
-      `${this.averageValue} ${this.name} (${this.min}-${this.max})`,
+      `${this.statStorage.averageValue} ${this.name} (${this.statStorage.min}-${this.statStorage.max})`,
       TEXT_X,
       TEXT_Y
     );
@@ -118,5 +92,18 @@ export class Panel {
       2 * PR,
       Math.round((1 - value / maxValue) * GRAPH_HEIGHT)
     );
+  }
+
+  destroy() {
+    if (!this.statStorage) {
+      return;
+    }
+    this.statStorage.removeCallback(this.update);
+    this.statStorage = null;
+    this.context = null;
+    if (this.dom) {
+      this.dom.remove();
+      this.dom = null;
+    }
   }
 }

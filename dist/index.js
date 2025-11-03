@@ -17,5 +17,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./stats-constants"), exports);
 __exportStar(require("./stats-panel"), exports);
 __exportStar(require("./stats-adapter"), exports);
+__exportStar(require("./stat-storage"), exports);
 __exportStar(require("./stats"), exports);
 //# sourceMappingURL=index.js.map

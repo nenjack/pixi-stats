@@ -8,4 +8,5 @@ export declare const FONT_SIZE = 20;
 export declare const GRAPH_Y: number;
 export declare const GRAPH_WIDTH: number;
 export declare const GRAPH_HEIGHT: number;
+export declare const DOM_ELEMENT_ID = "stats";
 //# sourceMappingURL=stats-constants.d.ts.map
