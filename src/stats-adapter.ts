@@ -1,8 +1,7 @@
-import { IStats } from './model';
+import { IStats, StatsJSAdapterI } from './model';
 import { PIXIHooks } from './pixi-hooks';
 import { StatStorage } from './stat-storage';
-
-export class StatsJSAdapter {
+export class StatsJSAdapter implements StatsJSAdapterI {
   hook: PIXIHooks;
   stats: IStats;
 

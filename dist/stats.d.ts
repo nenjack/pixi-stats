@@ -1,21 +1,14 @@
 import { PIXIHooks } from './pixi-hooks';
 import { RenderPanel } from './stats-panel';
 import { StatStorage } from './stat-storage';
-import { Renderer } from './model';
-import { StatsJSAdapter } from './stats-adapter';
-export type PanelConfig = {
-    name: string;
-    fg: string;
-    bg: string;
-    statStorage: StatStorage;
-};
-export declare class Stats {
+import { IStats, PanelConfig, Renderer, StatsJSAdapterI } from './model';
+export declare class Stats implements IStats {
     mode: number;
     frames: number;
     beginTime: number;
     prevTime: number;
     pixiHooks: PIXIHooks;
-    adapter: StatsJSAdapter;
+    adapter: StatsJSAdapterI;
     fpsStat: StatStorage;
     msStat: StatStorage;
     memStat?: StatStorage;
@@ -29,7 +22,7 @@ export declare class Stats {
     static getContainerElement(): HTMLElement | undefined;
     constructor(renderer: Renderer, ticker?: {
         add: (fn: () => void) => void;
-    }, containerElement?: HTMLElement | undefined);
+    }, containerElement?: HTMLElement | null | undefined);
     initDomElement(): void;
     handleClickPanel: (event: MouseEvent) => void;
     createStat(name: string, fg: string, bg: string): StatStorage;

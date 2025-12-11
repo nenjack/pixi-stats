@@ -1,18 +1,11 @@
 import { PIXIHooks } from './pixi-hooks';
 import { RenderPanel } from './stats-panel';
 import { StatStorage } from './stat-storage';
-import { Renderer } from './model';
+import { IStats, PanelConfig, Renderer, StatsJSAdapterI } from './model';
 import { StatsJSAdapter } from './stats-adapter';
 import { DOM_ELEMENT_ID } from './stats-constants';
 
-export type PanelConfig = {
-  name: string;
-  fg: string;
-  bg: string;
-  statStorage: StatStorage;
-};
-
-export class Stats {
+export class Stats implements IStats {
   mode = -1;
   frames = 0;
 
@@ -20,7 +13,7 @@ export class Stats {
   prevTime: number;
 
   pixiHooks: PIXIHooks;
-  adapter: StatsJSAdapter;
+  adapter: StatsJSAdapterI;
 
   fpsStat: StatStorage;
   msStat: StatStorage;
@@ -45,7 +38,10 @@ export class Stats {
   constructor(
     renderer: Renderer,
     ticker?: { add: (fn: () => void) => void },
-    containerElement = Stats.getContainerElement()
+    containerElement:
+      | HTMLElement
+      | null
+      | undefined = Stats.getContainerElement()
   ) {
     this.beginTime = (performance || Date).now();
     this.prevTime = this.beginTime;
