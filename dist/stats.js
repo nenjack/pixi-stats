@@ -16,7 +16,7 @@ class Stats {
         }
         return document === null || document === void 0 ? void 0 : document.body;
     }
-    constructor(renderer, ticker, containerElement = Stats.getContainerElement()) {
+    constructor({ renderer, ticker, containerElement = Stats.getContainerElement(), autoStart = true }) {
         this.mode = -1;
         this.frames = 0;
         this.panels = [];
@@ -56,6 +56,8 @@ class Stats {
         if (containerElement) {
             this.containerElement = containerElement;
             this.initDomElement();
+        }
+        if (this.containerElement && autoStart) {
             this.showPanel();
         }
     }
@@ -73,6 +75,9 @@ class Stats {
         return statStorage;
     }
     showPanel(id = 0) {
+        if (!this.containerElement || !this.domElement) {
+            throw new Error('[PIXI STATS]: Cannot show panel: DOM elements are not initialized. Ensure a valid containerElement is provided in the constructor options.');
+        }
         const panel = this.panels[id];
         if (panel) {
             this.removeDomRenderPanel();

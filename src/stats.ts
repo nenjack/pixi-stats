@@ -1,11 +1,10 @@
 import { PIXIHooks } from './pixi-hooks';
 import { RenderPanel } from './stats-panel';
 import { StatStorage } from './stat-storage';
-import { IStats, PanelConfig, Renderer, StatsJSAdapterI } from './model';
+import { StatsI, PanelConfig, StatsJSAdapterI, StatsOptions } from './model';
 import { StatsJSAdapter } from './stats-adapter';
 import { DOM_ELEMENT_ID } from './stats-constants';
-
-export class Stats implements IStats {
+export class Stats implements StatsI {
   mode = -1;
   frames = 0;
 
@@ -35,14 +34,12 @@ export class Stats implements IStats {
     return document?.body;
   }
 
-  constructor(
-    renderer: Renderer,
-    ticker?: { add: (fn: () => void) => void },
-    containerElement:
-      | HTMLElement
-      | null
-      | undefined = Stats.getContainerElement()
-  ) {
+  constructor({
+    renderer,
+    ticker,
+    containerElement = Stats.getContainerElement(),
+    autoStart = true
+  }: StatsOptions) {
     this.beginTime = (performance || Date).now();
     this.prevTime = this.beginTime;
 
@@ -76,6 +73,9 @@ export class Stats implements IStats {
     if (containerElement) {
       this.containerElement = containerElement;
       this.initDomElement();
+    }
+
+    if (this.containerElement && autoStart) {
       this.showPanel();
     }
   }
@@ -101,6 +101,12 @@ export class Stats implements IStats {
   }
 
   showPanel(id = 0) {
+    if (!this.containerElement || !this.domElement) {
+      throw new Error(
+        '[PIXI STATS]: Cannot show panel: DOM elements are not initialized. Ensure a valid containerElement is provided in the constructor options.'
+      );
+    }
+
     const panel = this.panels[id];
 
     if (panel) {

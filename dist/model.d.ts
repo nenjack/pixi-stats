@@ -3,7 +3,15 @@ import { StatStorage } from './stat-storage';
 export type Stub = Record<string, any>;
 export type Renderer = Stub;
 export type Texture = Stub;
-export interface IStats {
+export interface StatsOptions {
+    renderer: Renderer;
+    ticker?: {
+        add: (fn: () => void) => void;
+    };
+    containerElement?: HTMLElement | null | undefined;
+    autoStart?: boolean;
+}
+export interface StatsI {
     pixiHooks: PIXIHooks;
     adapter: StatsJSAdapterI;
     fpsStat: StatStorage;
@@ -16,7 +24,7 @@ export interface IStats {
 }
 export interface StatsJSAdapterI {
     hook: PIXIHooks;
-    stats: IStats;
+    stats: StatsI;
     dcStat?: StatStorage;
     tcStat?: StatStorage;
     update(): void;
