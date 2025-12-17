@@ -55,7 +55,6 @@ class Stats {
         }
         if (containerElement) {
             this.containerElement = containerElement;
-            this.initDomElement();
         }
         if (this.containerElement && autoStart) {
             this.showPanel();
@@ -75,11 +74,9 @@ class Stats {
         return statStorage;
     }
     showPanel(id = 0) {
-        if (!this.containerElement || !this.domElement) {
-            throw new Error('[PIXI STATS]: Cannot show panel: DOM elements are not initialized. Ensure a valid containerElement is provided in the constructor options.');
-        }
         const panel = this.panels[id];
         if (panel) {
+            this.initDomElement();
             this.removeDomRenderPanel();
             this.createRenderPanel(panel);
             this.mode = id;
