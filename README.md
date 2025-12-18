@@ -25,9 +25,9 @@ This library provides an info box that will help you monitor your code performan
 
 #### Live demo
 
-* https://nenjack.github.io/make2d/demo/?fps (pixi.js)
+- https://nenjack.github.io/make2d/demo/?fps (pixi.js)
 
-* https://nenjack.github.io/make3d/demo/?fps (three.js)
+- https://nenjack.github.io/make3d/demo/?fps (three.js)
 
 #### Usage
 
