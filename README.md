@@ -30,20 +30,20 @@ https://nenjack.github.io/oneforall/demo/?fps
 #### Usage
 
 ```ts
-import { Application } from 'pixi.js';
-import { Stats } from 'pixi-stats';
+import { Application } from 'pixi.js'
+import { Stats } from 'pixi-stats'
 
-const { renderer } = new Application();
-const stats = new Stats(renderer);
+const { renderer } = new Application()
+const stats = new Stats(renderer)
 ```
 
 #### Parameters
 
 ```ts
-const element = document.querySelector('#your_container');
-const ticker = PIXI.ticker;
+const element = document.querySelector('#your_container')
+const ticker = PIXI.ticker
 
-new Stats(renderer, ticker, element);
+new Stats(renderer, ticker, element)
 ```
 
 ### three.js
@@ -55,11 +55,11 @@ https://legacyofpain.app/?fps
 #### Usage
 
 ```ts
-import { Renderer } from 'three';
-import { Stats } from 'pixi-stats';
+import { Renderer } from 'three'
+import { Stats } from 'pixi-stats'
 
-const renderer = new Renderer();
-const stats = new Stats(renderer);
+const renderer = new Renderer()
+const stats = new Stats(renderer)
 ```
 
 ### Installation

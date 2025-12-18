@@ -1,1 +1,1 @@
-{"version":3,"file":"pixi-hooks.d.ts","sourceRoot":"","sources":["../src/pixi-hooks.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,mBAAmB,CAAC;AAC1C,OAAO,EAA8C,QAAQ,EAAE,MAAM,SAAS,CAAC;AAE/E,qBAAa,SAAU,SAAQ,SAAS;IACtC,IAAI,MAAM,YAET;gBAEW,QAAQ,EAAE,QAAQ;CA2C/B"}
+{"version":3,"file":"pixi-hooks.d.ts","sourceRoot":"","sources":["../src/pixi-hooks.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,mBAAmB,CAAA;AACzC,OAAO,EAA8C,QAAQ,EAAE,MAAM,SAAS,CAAA;AAE9E,qBAAa,SAAU,SAAQ,SAAS;IACtC,IAAI,MAAM,YAET;gBAEW,QAAQ,EAAE,QAAQ;CA2C/B"}

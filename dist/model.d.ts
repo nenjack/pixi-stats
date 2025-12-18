@@ -3,17 +3,9 @@ import { StatStorage } from './stat-storage';
 export type Stub = Record<string, any>;
 export type Renderer = Stub;
 export type Texture = Stub;
-export interface StatsOptions {
-    renderer: Renderer;
-    ticker?: {
-        add: (fn: () => void) => void;
-    };
-    containerElement?: HTMLElement | null | undefined;
-    autoStart?: boolean;
-}
-export interface StatsI {
+export interface IStats {
     pixiHooks: PIXIHooks;
-    adapter: StatsJSAdapterI;
+    adapter: IStatsJSAdapter;
     fpsStat: StatStorage;
     msStat: StatStorage;
     memStat?: StatStorage;
@@ -22,20 +14,21 @@ export interface StatsI {
     hidePanel(): void;
     update(): void;
 }
-export interface StatsJSAdapterI {
+export interface IStatsJSAdapter {
     hook: PIXIHooks;
-    stats: StatsI;
+    stats: IStats;
     dcStat?: StatStorage;
     tcStat?: StatStorage;
     update(): void;
     reset(): void;
 }
-export type PanelConfig = {
+export interface IPanelConfig {
     name: string;
     fg: string;
     bg: string;
     statStorage: StatStorage;
-};
+}
+export type UpdateCallbackType = (value: number, maxValue: number) => void;
 export interface PIXIGlTexture {
     gl: WebGLRenderingContext;
     texture: Texture;
@@ -46,5 +39,7 @@ export interface PIXIRendererGlTexture {
     managedTextures?: PIXIGlTextureArray;
     _glTextures?: PIXIGlTextureRecord;
 }
-export type UpdateCallbackType = (value: number, maxValue: number) => void;
+export interface PIXITicker {
+    add: (fn: () => void) => void;
+}
 //# sourceMappingURL=model.d.ts.map

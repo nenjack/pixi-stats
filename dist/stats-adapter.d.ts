@@ -1,12 +1,12 @@
-import { StatsI, StatsJSAdapterI } from './model';
+import { IStats, IStatsJSAdapter } from './model';
 import { PIXIHooks } from './pixi-hooks';
 import { StatStorage } from './stat-storage';
-export declare class StatsJSAdapter implements StatsJSAdapterI {
+export declare class StatsJSAdapter implements IStatsJSAdapter {
     hook: PIXIHooks;
-    stats: StatsI;
+    stats: IStats;
     dcStat?: StatStorage;
     tcStat?: StatStorage;
-    constructor(hook: PIXIHooks, stats: StatsI);
+    constructor(hook: PIXIHooks, stats: IStats);
     update(): void;
     reset(): void;
 }

@@ -1,13 +1,13 @@
 {
   "name": "pixi-stats",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "WebGL stats for pixi.js or/and three.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc --build",
-    "format": "prettier --write src",
+    "format": "prettier . --write",
     "lint": "eslint src --fix",
     "precommit": "yarn lint;yarn format;yarn build",
     "amend": "yarn precommit && git commit -a --am --no-edit"

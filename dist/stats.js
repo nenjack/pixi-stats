@@ -16,7 +16,7 @@ class Stats {
         }
         return document === null || document === void 0 ? void 0 : document.body;
     }
-    constructor({ renderer, ticker, containerElement = Stats.getContainerElement(), autoStart = true }) {
+    constructor(renderer, ticker, containerElement = Stats.getContainerElement(), autoStart = true) {
         this.mode = -1;
         this.frames = 0;
         this.panels = [];
