@@ -11,6 +11,7 @@ import {
   WIDTH
 } from './stats-constants';
 import { StatStorage } from './stat-storage';
+
 export class RenderPanel {
   dom: HTMLCanvasElement | null;
   context: CanvasRenderingContext2D | null;
@@ -53,12 +54,12 @@ export class RenderPanel {
     this.context = context;
   }
 
-  update = (value: number, maxValue: number) => {
+  update(value: number, maxValue: number) {
     if (!this.context || !this.statStorage || !this.dom) {
       return;
     }
-    const context: CanvasRenderingContext2D = this.context;
 
+    const context: CanvasRenderingContext2D = this.context;
     context.fillStyle = this.bg;
     context.globalAlpha = 1;
     context.fillRect(0, 0, WIDTH, GRAPH_Y);
@@ -84,15 +85,13 @@ export class RenderPanel {
 
     context.fillRect(GRAPH_X + GRAPH_WIDTH - PR, GRAPH_Y, PR, GRAPH_HEIGHT);
 
+    const graphValue = value
+      ? Math.round((1 - value / maxValue) * GRAPH_HEIGHT)
+      : parseFloat(this.statStorage.averageValue);
     context.fillStyle = this.bg;
     context.globalAlpha = 0.8;
-    context.fillRect(
-      GRAPH_X + GRAPH_WIDTH - PR,
-      GRAPH_Y,
-      2 * PR,
-      Math.round((1 - value / maxValue) * GRAPH_HEIGHT)
-    );
-  };
+    context.fillRect(GRAPH_X + GRAPH_WIDTH - PR, GRAPH_Y, 2 * PR, graphValue);
+  }
 
   destroy() {
     if (!this.statStorage) {

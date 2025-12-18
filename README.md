@@ -25,7 +25,7 @@ This library provides an info box that will help you monitor your code performan
 
 #### Live demo
 
-https://jackie-aniki.github.io/oneforall/demo/?fps
+https://nenjack.github.io/oneforall/demo/?fps
 
 #### Usage
 
@@ -91,7 +91,7 @@ The credit goes to:
 
 - https://github.com/mrdoob/stats.js/ - FPS, MS, MB counters
 - https://github.com/eXponenta/gstatsjs/ - DC, TC counters
-- https://github.com/Jackie-Aniki/ - maintainer, fixes, updates
+- https://github.com/nenjack/ - maintainer, fixes, updates
 
 ### License
 

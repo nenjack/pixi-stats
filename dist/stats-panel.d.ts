@@ -7,7 +7,7 @@ export declare class RenderPanel {
     name: string;
     statStorage: StatStorage | null;
     constructor(name: string, fg: string, bg: string, statStorage: StatStorage);
-    update: (value: number, maxValue: number) => void;
+    update(value: number, maxValue: number): void;
     destroy(): void;
 }
 //# sourceMappingURL=stats-panel.d.ts.map

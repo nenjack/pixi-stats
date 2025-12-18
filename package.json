@@ -1,6 +1,6 @@
 {
   "name": "pixi-stats",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "WebGL stats for pixi.js or/and three.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Prozi/pixi-stats.git"
+    "url": "git+https://github.com/nenjack/pixi-stats.git"
   },
   "files": [
     "dist/",
@@ -32,12 +32,12 @@
     "stats",
     "fps"
   ],
-  "author": "Jacek Pietal <prozi85@gmail.com>",
+  "author": "Jacek Pietal <nenjack85@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Prozi/pixi-stats/issues"
+    "url": "https://github.com/nenjack/pixi-stats/issues"
   },
-  "homepage": "https://github.com/Prozi/pixi-stats#readme",
+  "homepage": "https://github.com/nenjack/pixi-stats#readme",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^9.39.2",

@@ -26,7 +26,6 @@ export class StatStorage {
 
   pushValue(value: number) {
     this.values.push(value);
-
     if (this.values.length > this.snapshotSize) {
       this.values = this.values.slice(-this.snapshotSize);
     }

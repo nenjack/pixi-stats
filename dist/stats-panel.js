@@ -4,23 +4,6 @@ exports.RenderPanel = void 0;
 const stats_constants_1 = require("./stats-constants");
 class RenderPanel {
     constructor(name, fg, bg, statStorage) {
-        this.update = (value, maxValue) => {
-            if (!this.context || !this.statStorage || !this.dom) {
-                return;
-            }
-            const context = this.context;
-            context.fillStyle = this.bg;
-            context.globalAlpha = 1;
-            context.fillRect(0, 0, stats_constants_1.WIDTH, stats_constants_1.GRAPH_Y);
-            context.fillStyle = this.fg;
-            context.font = `bold ${stats_constants_1.FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
-            context.fillText(`${this.statStorage.averageValue} ${this.name} (${this.statStorage.min}-${this.statStorage.max})`, stats_constants_1.TEXT_X, stats_constants_1.TEXT_Y);
-            context.drawImage(this.dom, stats_constants_1.GRAPH_X + stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT, stats_constants_1.GRAPH_X, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
-            context.fillRect(stats_constants_1.GRAPH_X + stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
-            context.fillStyle = this.bg;
-            context.globalAlpha = 0.8;
-            context.fillRect(stats_constants_1.GRAPH_X + stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_Y, 2 * stats_constants_1.PR, Math.round((1 - value / maxValue) * stats_constants_1.GRAPH_HEIGHT));
-        };
         this.fg = fg;
         this.bg = bg;
         this.name = name;
@@ -45,6 +28,26 @@ class RenderPanel {
         context.fillRect(stats_constants_1.GRAPH_X, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH, stats_constants_1.GRAPH_HEIGHT);
         this.dom = canvas;
         this.context = context;
+    }
+    update(value, maxValue) {
+        if (!this.context || !this.statStorage || !this.dom) {
+            return;
+        }
+        const context = this.context;
+        context.fillStyle = this.bg;
+        context.globalAlpha = 1;
+        context.fillRect(0, 0, stats_constants_1.WIDTH, stats_constants_1.GRAPH_Y);
+        context.fillStyle = this.fg;
+        context.font = `bold ${stats_constants_1.FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
+        context.fillText(`${this.statStorage.averageValue} ${this.name} (${this.statStorage.min}-${this.statStorage.max})`, stats_constants_1.TEXT_X, stats_constants_1.TEXT_Y);
+        context.drawImage(this.dom, stats_constants_1.GRAPH_X + stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT, stats_constants_1.GRAPH_X, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
+        context.fillRect(stats_constants_1.GRAPH_X + stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
+        const graphValue = value
+            ? Math.round((1 - value / maxValue) * stats_constants_1.GRAPH_HEIGHT)
+            : parseFloat(this.statStorage.averageValue);
+        context.fillStyle = this.bg;
+        context.globalAlpha = 0.8;
+        context.fillRect(stats_constants_1.GRAPH_X + stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_Y, 2 * stats_constants_1.PR, graphValue);
     }
     destroy() {
         if (!this.statStorage) {

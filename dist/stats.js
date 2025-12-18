@@ -122,14 +122,14 @@ class Stats {
         this.beginTime = (performance || Date).now();
     }
     end() {
-        this.frames++;
         const time = (performance || Date).now();
+        this.frames++;
         this.msStat.update(time - this.beginTime, 200);
         if (time > this.prevTime + 1000) {
             this.fpsStat.update((this.frames * 1000) / (time - this.prevTime), 100);
             this.prevTime = time;
             this.frames = 0;
-            if (this.memStat && 'memory' in performance) {
+            if ('memory' in performance && this.memStat) {
                 const memory = performance.memory;
                 this.memStat.update(memory.usedJSHeapSize / 1048576, memory.jsHeapSizeLimit / 1048576);
             }

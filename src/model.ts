@@ -22,7 +22,7 @@ export interface StatsI {
   msStat: StatStorage;
   memStat?: StatStorage;
   createStat(name: string, fg: string, bg: string): StatStorage;
-  showPanel(id: number): void;
+  showPanel(id?: number): void;
   hidePanel(): void;
   update(): void;
 }

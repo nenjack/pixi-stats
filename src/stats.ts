@@ -101,7 +101,6 @@ export class Stats implements StatsI {
 
   showPanel(id = 0) {
     const panel = this.panels[id];
-
     if (panel) {
       this.initDomElement();
       this.removeDomRenderPanel();
@@ -124,7 +123,6 @@ export class Stats implements StatsI {
     }
 
     this.renderPanel = new RenderPanel(name, fg, bg, statStorage);
-
     if (this.renderPanel.dom) {
       this.domElement.appendChild(this.renderPanel.dom);
     }
@@ -137,7 +135,6 @@ export class Stats implements StatsI {
 
     if (this.renderPanel?.dom) {
       this.domElement.removeChild(this.renderPanel.dom);
-
       this.renderPanel.destroy();
       this.renderPanel = null;
     }
@@ -149,7 +146,6 @@ export class Stats implements StatsI {
     }
 
     this.containerElement.removeChild(this.domElement);
-
     this.domElement.removeEventListener('click', this.handleClickPanel, false);
     this.domElement = null;
   }
@@ -159,10 +155,9 @@ export class Stats implements StatsI {
   }
 
   end(): number {
-    this.frames++;
-
     const time: number = (performance || Date).now();
 
+    this.frames++;
     this.msStat.update(time - this.beginTime, 200);
 
     if (time > this.prevTime + 1000) {
@@ -171,7 +166,7 @@ export class Stats implements StatsI {
       this.prevTime = time;
       this.frames = 0;
 
-      if (this.memStat && 'memory' in performance) {
+      if ('memory' in performance && this.memStat) {
         const memory = performance.memory as {
           usedJSHeapSize: number;
           jsHeapSizeLimit: number;
