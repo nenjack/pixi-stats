@@ -1,6 +1,6 @@
 {
   "name": "pixi-stats",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "description": "WebGL stats for pixi.js or/and three.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

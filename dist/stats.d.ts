@@ -20,7 +20,7 @@ export declare class Stats implements IStats {
      * in document/html/dom context returns document's body
      */
     static getContainerElement(): HTMLElement | undefined;
-    constructor(renderer: Renderer, ticker: PIXITicker, containerElement?: HTMLElement | undefined, autoStart?: boolean);
+    constructor(renderer: Renderer, ticker?: PIXITicker, containerElement?: HTMLElement | undefined, autoStart?: boolean);
     initDomElement(): void;
     handleClickPanel: (event: MouseEvent) => void;
     createStat(name: string, fg: string, bg: string): StatStorage;

@@ -42,7 +42,7 @@ export class Stats implements IStats {
 
   constructor(
     renderer: Renderer,
-    ticker: PIXITicker,
+    ticker?: PIXITicker,
     containerElement = Stats.getContainerElement(),
     autoStart = true
   ) {
