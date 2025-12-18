@@ -16,11 +16,7 @@ class RenderPanel {
         if (!context) {
             throw new Error('Cant get context on canvas');
         }
-        context.font = `bold ${stats_constants_1.FONT_SIZE}
-
-px ${getComputedStyle(document.body).fontFamily}
-
-`;
+        context.font = `bold ${stats_constants_1.FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
         context.textBaseline = 'top';
         context.fillStyle = this.bg;
         context.fillRect(0, 0, stats_constants_1.WIDTH, stats_constants_1.HEIGHT);
@@ -42,20 +38,8 @@ px ${getComputedStyle(document.body).fontFamily}
         context.globalAlpha = 1;
         context.fillRect(0, 0, stats_constants_1.WIDTH, stats_constants_1.GRAPH_Y);
         context.fillStyle = this.fg;
-        context.font = `bold ${stats_constants_1.FONT_SIZE}
-
-px ${getComputedStyle(document.body).fontFamily}
-
-`;
-        context.fillText(`${this.statStorage.averageValue}
-
- ${this.name}
-
- (${this.statStorage.min}
-
--${this.statStorage.max}
-
-)`, stats_constants_1.TEXT_X, stats_constants_1.TEXT_Y);
+        context.font = `bold ${stats_constants_1.FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
+        context.fillText(`${this.statStorage.averageValue} ${this.name} (${this.statStorage.min}-${this.statStorage.max})`, stats_constants_1.TEXT_X, stats_constants_1.TEXT_Y);
         context.drawImage(this.dom, stats_constants_1.GRAPH_X + stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT, stats_constants_1.GRAPH_X, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
         context.fillRect(stats_constants_1.GRAPH_X + stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
         const graphValue = value

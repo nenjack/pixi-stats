@@ -36,11 +36,7 @@ export class RenderPanel {
       throw new Error('Cant get context on canvas')
     }
 
-    context.font = `bold ${FONT_SIZE}
-
-px ${getComputedStyle(document.body).fontFamily}
-
-`
+    context.font = `bold ${FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`
     context.textBaseline = 'top'
 
     context.fillStyle = this.bg
@@ -68,21 +64,9 @@ px ${getComputedStyle(document.body).fontFamily}
     context.globalAlpha = 1
     context.fillRect(0, 0, WIDTH, GRAPH_Y)
     context.fillStyle = this.fg
-    context.font = `bold ${FONT_SIZE}
-
-px ${getComputedStyle(document.body).fontFamily}
-
-`
+    context.font = `bold ${FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`
     context.fillText(
-      `${this.statStorage.averageValue}
-
- ${this.name}
-
- (${this.statStorage.min}
-
--${this.statStorage.max}
-
-)`,
+      `${this.statStorage.averageValue} ${this.name} (${this.statStorage.min}-${this.statStorage.max})`,
       TEXT_X,
       TEXT_Y
     )
