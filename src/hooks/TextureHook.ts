@@ -53,6 +53,7 @@ export default class TextureHook {
     if (index > -1) {
       this.createdTextures.splice(index, 1)
     }
+
     this.realGLDeleteTexture.call(this.gl, texture)
   }
 

@@ -23,6 +23,7 @@ export default class BaseHooks {
     if (this.glhook && this.glhook.isInit) {
       return this.glhook.drawPasses
     }
+
     return -1
   }
 
@@ -35,6 +36,7 @@ export default class BaseHooks {
       this._drawCalls = this.drawCalls
       return 0
     }
+
     const dc: number = this.drawCalls
     const delta: number = dc - this._drawCalls
     this._drawCalls = dc

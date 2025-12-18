@@ -8,7 +8,7 @@ class RenderPanel {
         this.bg = bg;
         this.name = name;
         this.statStorage = statStorage;
-        this.statStorage.addCallback(this.update);
+        this.statStorage.addCallback(this.update.bind(this));
         const canvas = document.createElement('canvas');
         canvas.width = stats_constants_1.WIDTH;
         canvas.height = stats_constants_1.HEIGHT;
@@ -16,7 +16,11 @@ class RenderPanel {
         if (!context) {
             throw new Error('Cant get context on canvas');
         }
-        context.font = `bold ${stats_constants_1.FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
+        context.font = `bold ${stats_constants_1.FONT_SIZE}
+
+px ${getComputedStyle(document.body).fontFamily}
+
+`;
         context.textBaseline = 'top';
         context.fillStyle = this.bg;
         context.fillRect(0, 0, stats_constants_1.WIDTH, stats_constants_1.HEIGHT);
@@ -38,8 +42,20 @@ class RenderPanel {
         context.globalAlpha = 1;
         context.fillRect(0, 0, stats_constants_1.WIDTH, stats_constants_1.GRAPH_Y);
         context.fillStyle = this.fg;
-        context.font = `bold ${stats_constants_1.FONT_SIZE}px ${getComputedStyle(document.body).fontFamily}`;
-        context.fillText(`${this.statStorage.averageValue} ${this.name} (${this.statStorage.min}-${this.statStorage.max})`, stats_constants_1.TEXT_X, stats_constants_1.TEXT_Y);
+        context.font = `bold ${stats_constants_1.FONT_SIZE}
+
+px ${getComputedStyle(document.body).fontFamily}
+
+`;
+        context.fillText(`${this.statStorage.averageValue}
+
+ ${this.name}
+
+ (${this.statStorage.min}
+
+-${this.statStorage.max}
+
+)`, stats_constants_1.TEXT_X, stats_constants_1.TEXT_Y);
         context.drawImage(this.dom, stats_constants_1.GRAPH_X + stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT, stats_constants_1.GRAPH_X, stats_constants_1.GRAPH_Y, stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
         context.fillRect(stats_constants_1.GRAPH_X + stats_constants_1.GRAPH_WIDTH - stats_constants_1.PR, stats_constants_1.GRAPH_Y, stats_constants_1.PR, stats_constants_1.GRAPH_HEIGHT);
         const graphValue = value
@@ -53,7 +69,7 @@ class RenderPanel {
         if (!this.statStorage) {
             return;
         }
-        this.statStorage.removeCallback(this.update);
+        this.statStorage.removeCallback(this.update.bind(this));
         this.statStorage = null;
         this.context = null;
         if (this.dom) {
